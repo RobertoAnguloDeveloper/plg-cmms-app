@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cmms/services/session_manager.dart';
 import 'package:cmms/services/user_api_service.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:cmms/screens/HomePage.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -197,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PlannedInspectionPage()),
+                                    builder: (context) => HomePage()),
                               );
                             } else {
                               showToast(context, 'Login failed');

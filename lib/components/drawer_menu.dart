@@ -1,8 +1,11 @@
+import 'package:cmms/models/model.dart';
 import 'package:flutter/material.dart';
 import 'package:cmms/screens/LoginPage.dart';
 import 'package:cmms/services/session_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:cmms/screens/HomePage.dart';
+import 'package:cmms/screens/PlannedInspectionPage.dart';
+import '../controller/controller.dart';
 
 class DrawerMenu extends StatefulWidget {
   final Function(int) onItemTapped;
@@ -14,7 +17,13 @@ class DrawerMenu extends StatefulWidget {
 
   @override
   _DrawerMenuState createState() => _DrawerMenuState();
+
+
 }
+
+  NewInspectionFormData formData = NewInspectionFormData();
+  NewInspectionFormController formController = NewInspectionFormController(data: formData);
+
 
 class _DrawerMenuState extends State<DrawerMenu> {
   String? _userName;
@@ -24,9 +33,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    //  _loadUserData();
   }
 
+/*
   void _loadUserData() async {
     final userData = await SessionManager.getSession();
     if (userData != null) {
@@ -36,7 +46,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       });
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -46,8 +56,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text(_userName ?? 'Nombre de usuario'),
-              accountEmail: Text(_userEmail ?? 'correo@ejemplo.com'),
+              accountName: Text(_userName ?? 'Username'),
+              accountEmail: Text(_userEmail ?? 'email@gmail.com'),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(
@@ -58,19 +68,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
               decoration: BoxDecoration(
                 color: Color(0xFF39AFC9),
               ),
-            ),
-            ListTile(
-              title: Text(
-                'Profile',
-                style: TextStyle(
-                    fontSize: 18, color: Color.fromARGB(255, 73, 70, 70)),
-              ),
-              leading: Icon(
-                FontAwesomeIcons.solidUser,
-                size: 24,
-                color: Color(0xFF39AFC9),
-              ),
-              onTap: () {},
             ),
             SizedBox(height: 16),
             Padding(
@@ -93,6 +90,24 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             ListTile(
               title: Text(
+                'Home',
+                style: TextStyle(
+                    fontSize: 18, color: Color.fromARGB(255, 73, 70, 70)),
+              ),
+              leading: Icon(
+                FontAwesomeIcons.home,
+                size: 24,
+                color: Color(0xFF39AFC9),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
                 'New inspections',
                 style: TextStyle(
                     fontSize: 18, color: Color.fromARGB(255, 73, 70, 70)),
@@ -103,9 +118,23 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 color: Color(0xFF39AFC9),
               ),
               onTap: () {
-                Navigator.pop(widget.parentContext);
-              },
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlannedInspectionPage(
+              controller: formController,
+              data: formData,
             ),
+          ),
+        );
+      },
+    ),
+
+
+             
+                
+             
+            
             ListTile(
               title: Text(
                 'All inspections',
@@ -118,7 +147,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 color: Color(0xFF39AFC9),
               ),
               onTap: () {
-                Navigator.pop(widget.parentContext);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
             SizedBox(height: 16),
@@ -152,3 +184,4 @@ class _DrawerMenuState extends State<DrawerMenu> {
     );
   }
 }
+
